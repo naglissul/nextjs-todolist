@@ -1,6 +1,9 @@
+"use client";
 import { useState } from "react";
 import { Button, Card, Textarea } from "flowbite-react";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface IEditTodo {
   todoId: string;
@@ -12,9 +15,11 @@ export default function EditTodo({
   oldContent,
 }: IEditTodo): JSX.Element {
   const [content, setContent] = useState<string>(oldContent);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const editTodo = async () => {
-    await fetch(
+    event?.preventDefault();
+    const response = await fetch(
       `http://127.0.0.1:8090/api/collections/Todos/records/${todoId}`,
       {
         method: "PATCH",
@@ -24,7 +29,11 @@ export default function EditTodo({
         body: JSON.stringify({ content: content }),
       }
     );
-    redirect("/todos");
+    if (response.ok) {
+      setIsSaved(true);
+    } else {
+      console.error("PATCH failed. Code: ", response.status);
+    }
   };
   return (
     <Card className="mx-5 my-10">
@@ -36,8 +45,13 @@ export default function EditTodo({
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <Button type="submit">Sumbit Edit</Button>
+        <Button type="submit">Submit Edit</Button>
       </form>
+      {isSaved && (
+        <Link href="/todos">
+          <Button color="green">Saved! Go back</Button>
+        </Link>
+      )}
     </Card>
   );
 }

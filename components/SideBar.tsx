@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import HomeButton from "./HomeButon";
 import BookButton from "./BookButton";

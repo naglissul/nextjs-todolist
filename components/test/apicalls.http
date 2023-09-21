@@ -1,7 +1,19 @@
-### first
+### create
 POST http://127.0.0.1:8090/api/collections/Todos/records
 Content-Type: application/json
 
 {
     "content": "blabla"
+}
+
+### delete
+DELETE http://127.0.0.1:8090/api/collections/Todos/records/d9hwq3orgjcy7kr
+### edit content
+
+### mard done/undone
+PATCH http://127.0.0.1:8090/api/collections/Todos/records/5twmwb8xl5ll2t0
+Content-Type: application/json
+
+{
+    "isDone": true
 }
