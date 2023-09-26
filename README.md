@@ -8,25 +8,38 @@ A small project for practising next.js
 - Tailwind
 - Flowbite
 - React-flowbite
-- Pocketbase
+- Payload CMS
 
 ## How to run in dev env?
 
-1. Start pocketbase server:
+1. Start MongoDB (has to be installed and C:/MongoDBFiles/data/db directory created)
 
 ```
-./pocketbase serve
+mongod --dbpath="C:/MongoDBFiles/data/db"
 ```
 
-2. Start frontend:
+2. Start PayloadCMS:
+
+```
+cd PAYLOADCMS
+npm run dev
+```
+
+3. Access your server data on localhost:8090/admin. Create account with:
+
+```
+email: admin@example.com
+password: admin
+```
+
+3. Start frontend:
 
 ```
 npm run dev
 ```
 
-3. You can access your server data on localhost:8090/\_
-
 ## Bugs
 
-1. Can only create a todo once. After that need to refresh
-2. Similarly, sometimes only can do one API request for one page load. After that it needs to be refreshed
+1. When deleting or checking as done doesn't refresh on it's own.
+2. Logs in only after some time, therefore throws errors in console.
+3. Text fields sometimes lag.

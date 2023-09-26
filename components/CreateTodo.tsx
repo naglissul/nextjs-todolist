@@ -11,16 +11,15 @@ export default function CreateTodo(): JSX.Element {
 
   const create = async () => {
     try {
-      const response = await fetch(
-        "http://127.0.0.1:8090/api/collections/Todos/records",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ content }),
-        }
-      );
+      const response = await fetch("http://127.0.0.1:8090/api/todos", {
+        method: "POST",
+        credentials: "include",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content }),
+      });
       if (!response.ok) {
         console.error("POST request failed with code", response.status);
       } else {

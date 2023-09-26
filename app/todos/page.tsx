@@ -2,6 +2,7 @@
 import CreateTodo from "@/components/CreateTodo";
 
 import Todo from "./Todo";
+import { useEffect, useState } from "react";
 
 interface ITodo {
   id: string;
@@ -10,17 +11,54 @@ interface ITodo {
   created: string;
 }
 
-async function getTodos(): Promise<ITodo[]> {
-  const res = await fetch(
-    "http://127.0.0.1:8090/api/collections/Todos/records?page=1&perPage=30",
-    { method: "GET", cache: "no-store" }
-  );
+async function login() {
+  try {
+    const req = await fetch("http://127.0.0.1:8090/api/users/login", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: "admin@example.com",
+        password: "admin",
+      }),
+    });
+    const resp = await req?.json();
+    console.log(resp.token);
+    return resp.token;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getTodos(token: string): Promise<ITodo[]> {
+  const res = await fetch("http://127.0.0.1:8090/api/todos", {
+    method: "GET",
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const data = await res.json();
-  return data?.items;
+  return data?.docs;
 }
 
 export default async function TodosPage() {
-  const todos: ITodo[] = await getTodos();
+  const [todos, setTodos] = useState<ITodo[]>();
+  const [token, setToken] = useState<string>("");
+
+  const fetchData = async () => {
+    const token = await login();
+    setToken(token);
+    const todos = await getTodos(token);
+    setTodos(todos);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       <h1 className="text-center text-nice font-bold text-5xl my-16">

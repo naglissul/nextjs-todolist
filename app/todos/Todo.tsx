@@ -16,16 +16,15 @@ export default function Todo({ id, isDone, content, created }: ITodo) {
 
   const deleteTodo = async () => {
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8090/api/collections/Todos/records/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`http://127.0.0.1:8090/api/todos/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
       if (!response.ok) {
         console.error("DELETE request failed with code", response.status);
       } else {
         router.refresh();
+        alert("Please, refresh...");
       }
     } catch (error) {
       console.error("Server error: ", error);
@@ -34,20 +33,20 @@ export default function Todo({ id, isDone, content, created }: ITodo) {
 
   const markDone = async () => {
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8090/api/collections/Todos/records/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ isDone: !isDone }),
-        }
-      );
+      const response = await fetch(`http://127.0.0.1:8090/api/todos/${id}`, {
+        method: "PATCH",
+        credentials: "include",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isDone: !isDone }),
+      });
       if (!response.ok) {
         console.error("PATCH request failed with code", response.status);
       } else {
         router.refresh();
+        alert("Please, refresh...");
       }
     } catch (error) {
       console.error("Server error: ", error);

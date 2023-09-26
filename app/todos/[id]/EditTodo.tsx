@@ -19,16 +19,15 @@ export default function EditTodo({
 
   const editTodo = async () => {
     event?.preventDefault();
-    const response = await fetch(
-      `http://127.0.0.1:8090/api/collections/Todos/records/${todoId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: content }),
-      }
-    );
+    const response = await fetch(`http://127.0.0.1:8090/api/todos/${todoId}`, {
+      method: "PATCH",
+      credentials: "include",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: content }),
+    });
     if (response.ok) {
       setIsSaved(true);
     } else {

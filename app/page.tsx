@@ -1,6 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function Home(): JSX.Element {
+  
   return (
     <main>
       <h1 className="text-center text-nice font-bold text-5xl my-16">

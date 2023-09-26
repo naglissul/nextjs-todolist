@@ -1,5 +1,5 @@
 ### create
-POST http://127.0.0.1:8090/api/collections/Todos/records
+POST http://127.0.0.1:8090/api/todos
 Content-Type: application/json
 
 {
@@ -7,13 +7,16 @@ Content-Type: application/json
 }
 
 ### delete
-DELETE http://127.0.0.1:8090/api/collections/Todos/records/d9hwq3orgjcy7kr
+DELETE http://127.0.0.1:8090/api/todos/651328f375fcb3e1d35341cf
 ### edit content
 
 ### mard done/undone
-PATCH http://127.0.0.1:8090/api/collections/Todos/records/5twmwb8xl5ll2t0
+PATCH http://127.0.0.1:8090/api/todos/651328f375fcb3e1d35341cf
 Content-Type: application/json
 
 {
     "isDone": true
 }
+
+### view all
+GET http://127.0.0.1:8090/api/todos

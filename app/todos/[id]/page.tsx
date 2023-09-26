@@ -10,10 +10,12 @@ interface ITodo {
 }
 
 async function getTodo(todoId: string): Promise<ITodo> {
-  const res = await fetch(
-    `http://127.0.0.1:8090/api/collections/Todos/records/${todoId}`,
-    { method: "GET", next: { revalidate: 10 } }
-  );
+  const res = await fetch(`http://127.0.0.1:8090/api/todos/${todoId}`, {
+    method: "GET",
+    credentials: "include",
+
+    next: { revalidate: 10 },
+  });
   const data = await res.json();
   return data;
 }
